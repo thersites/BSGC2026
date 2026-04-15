@@ -162,8 +162,11 @@ export async function flyToCountry(view, iso) {
     sel.add(new Graphic({ geometry: feature.geometry, symbol: buildSelectionSymbol(score) }));
   }
 
+  // Pass the geometry directly so the SDK handles antimeridian-crossing
+  // extents correctly (e.g. USA including Alaska). Manually expanding the
+  // extent can produce longitudes outside ±180° and fly the view off-map.
   await view.goTo(
-    { target: feature.geometry.extent.expand(2) },
+    feature.geometry,
     { duration: 800, easing: "ease-in-out" }
   );
 }
