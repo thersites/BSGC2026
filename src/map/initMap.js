@@ -54,13 +54,11 @@ export async function initMap(containerId) {
     zoom: 2,
     center: [10, 20],
     constraints: { minZoom: 1, maxZoom: 8 },
-    ui: { components: ["zoom", "compass", "attribution"] },
+    // ui.components with string names fails in SDK v5 (DefaultUI2D._place error).
+    // Let the SDK render its default UI, then remove unwanted widgets after when().
   });
 
   await view.when();
-
-  // Force a resize in case the container was measured at 0×0 during construction.
-  view.resize();
 
   // ── Hover: highlight + tooltip ─────────────────────────────────────────────
   view.on("pointer-move", async (event) => {
