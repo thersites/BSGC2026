@@ -67,7 +67,7 @@ export async function initMap(containerId) {
 
     if (hit) {
       const attrs = hit.attributes;
-      const name  = attrs.displayName ?? attrs.ADMIN ?? "Unknown";
+      const name  = attrs.displayName ?? attrs.name ?? "Unknown";
       const score = attrs.noData ? "No data" : `AI Score: ${attrs.composite}`;
 
       store.setHovered(attrs.iso, name);

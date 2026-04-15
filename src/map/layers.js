@@ -34,8 +34,12 @@ async function buildEnrichedGeoJSONUrl() {
   const enriched = {
     ...geoJSON,
     features: geoJSON.features.map((feature) => {
-      const iso = feature.properties?.ISO_A3 ?? "";
-      const data = AI_DATA[iso] ?? getDefaultEntry(feature.properties?.ADMIN ?? iso);
+      // datasets/geo-countries uses "ISO3166-1-Alpha-3"; Natural Earth uses "ISO_A3"
+      const iso = feature.properties?.["ISO3166-1-Alpha-3"]
+                ?? feature.properties?.ISO_A3
+                ?? "";
+      const countryName = feature.properties?.name ?? feature.properties?.ADMIN ?? iso;
+      const data = AI_DATA[iso] ?? getDefaultEntry(countryName);
       return {
         ...feature,
         properties: {
@@ -46,7 +50,7 @@ async function buildEnrichedGeoJSONUrl() {
           industry:    data.noData ? -1 : data.industry,
           surveillance: data.noData ? -1 : data.surveillance,
           noData:      data.noData ? 1 : 0,
-          displayName: data.name ?? feature.properties?.ADMIN ?? iso,
+          displayName: data.name ?? countryName,
         },
       };
     }),
