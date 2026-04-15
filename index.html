@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI-Free Zones — World Map</title>
+  </head>
+  <body>
+    <calcite-shell>
+      <calcite-navigation slot="header">
+        <calcite-navigation-logo
+          slot="logo"
+          heading="AI-Free Zones"
+          description="Discover where AI hasn't taken over"
+        ></calcite-navigation-logo>
+      </calcite-navigation>
+
+      <calcite-shell-panel slot="panel-start" position="start" width-scale="m">
+        <calcite-panel heading="Safest Places from AI">
+
+          <calcite-block
+            id="ranked-block"
+            heading="Top 20 Least AI-Exposed"
+            expanded
+          >
+            <calcite-list
+              id="ranked-list"
+              selection-mode="none"
+              label="Ranked countries by AI presence"
+            ></calcite-list>
+          </calcite-block>
+
+          <calcite-block
+            id="detail-block"
+            heading="Country Detail"
+            expanded
+            hidden
+          >
+            <div id="detail-content"></div>
+          </calcite-block>
+
+          <calcite-block
+            id="compare-block"
+            heading="Comparison"
+            expanded
+            hidden
+          >
+            <calcite-action
+              id="clear-btn"
+              slot="control"
+              icon="x"
+              text="Clear"
+              title="Clear comparison"
+            ></calcite-action>
+            <div id="compare-content"></div>
+          </calcite-block>
+
+          <calcite-block heading="Legend" expanded>
+            <div id="legend-content" class="legend">
+              <div class="legend-item">
+                <span class="legend-swatch" style="background:#1a9641"></span>
+                <span>0–20 &mdash; Virtually no AI</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-swatch" style="background:#78c679"></span>
+                <span>21–40 &mdash; Low AI presence</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-swatch" style="background:#c9e88a"></span>
+                <span>41–60 &mdash; Moderate AI presence</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-swatch" style="background:#fdae61"></span>
+                <span>61–80 &mdash; High AI presence</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-swatch" style="background:#d7191c"></span>
+                <span>81–100 &mdash; AI-saturated</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-swatch no-data"></span>
+                <span>No data</span>
+              </div>
+            </div>
+          </calcite-block>
+
+        </calcite-panel>
+      </calcite-shell-panel>
+
+      <div id="map-container"></div>
+    </calcite-shell>
+
+    <div id="tooltip" class="map-tooltip" role="tooltip" aria-hidden="true"></div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,229 @@
+/* ── Reset / base ────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--calcite-sans-family, "Avenir Next", sans-serif);
+}
+
+/* ── Full-screen shell ───────────────────────────────────────────────────── */
+calcite-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ── Map container fills remaining space ─────────────────────────────────── */
+#map-container {
+  flex: 1;
+  min-height: 0;
+}
+
+.esri-view {
+  height: 100%;
+}
+
+/* ── Tooltip ─────────────────────────────────────────────────────────────── */
+.map-tooltip {
+  position: fixed;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.82);
+  color: #fff;
+  font-size: 0.8125rem;
+  padding: 5px 10px;
+  border-radius: 4px;
+  pointer-events: none;
+  white-space: nowrap;
+  max-width: 260px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+}
+
+.map-tooltip[hidden] {
+  display: none;
+}
+
+/* ── Legend ──────────────────────────────────────────────────────────────── */
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 4px 0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8125rem;
+  color: var(--calcite-color-text-2, #4a4a4a);
+}
+
+.legend-swatch {
+  display: inline-block;
+  width: 18px;
+  height: 14px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  border: 1px solid rgba(0,0,0,0.15);
+}
+
+.legend-swatch.no-data {
+  background: #c8c8c8;
+}
+
+/* ── Score bars (detail panel) ───────────────────────────────────────────── */
+.score-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0 8px;
+}
+
+.score-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 28px;
+  align-items: center;
+  gap: 8px;
+}
+
+.score-label {
+  font-size: 0.75rem;
+  color: var(--calcite-color-text-2, #555);
+  white-space: nowrap;
+}
+
+.score-track {
+  height: 8px;
+  background: var(--calcite-color-border-3, #e0e0e0);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.score-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.score-value {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: right;
+  color: var(--calcite-color-text-1, #333);
+}
+
+/* ── Detail score hero ───────────────────────────────────────────────────── */
+.detail-score {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--calcite-color-background, #f8f8f8);
+  border-radius: 6px;
+  margin-bottom: 4px;
+}
+
+.detail-score-value {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.detail-score-label {
+  font-size: 0.8125rem;
+  color: var(--calcite-color-text-2, #555);
+}
+
+.score-note {
+  font-size: 0.7rem;
+  color: var(--calcite-color-text-3, #888);
+  margin: 6px 0 0;
+  line-height: 1.4;
+}
+
+/* ── Comparison grid ─────────────────────────────────────────────────────── */
+.compare-grid {
+  display: flex;
+  gap: 0;
+  width: 100%;
+}
+
+.compare-col {
+  flex: 1;
+  min-width: 0;
+  padding: 8px;
+  text-align: center;
+}
+
+.compare-divider {
+  width: 1px;
+  background: var(--calcite-color-border-3, #e0e0e0);
+  margin: 4px 0;
+}
+
+.compare-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--calcite-color-text-1, #333);
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.compare-score {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.compare-sublabel {
+  font-size: 0.65rem;
+  color: var(--calcite-color-text-3, #888);
+  margin: 2px 0 8px;
+  line-height: 1.2;
+}
+
+.compare-dims {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.compare-dim {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: var(--calcite-color-text-2, #555);
+}
+
+.compare-dim span {
+  text-align: left;
+}
+
+.compare-dim strong {
+  font-weight: 700;
+}
+
+/* ── No data message ─────────────────────────────────────────────────────── */
+.no-data-msg {
+  font-size: 0.8125rem;
+  color: var(--calcite-color-text-3, #888);
+  margin: 4px 0;
+}
+
+/* ── Responsive: collapse sidebar on narrow viewports ───────────────────── */
+@media (max-width: 600px) {
+  calcite-shell-panel {
+    --calcite-shell-panel-width: 100%;
+  }
+}
