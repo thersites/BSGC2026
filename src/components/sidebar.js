@@ -17,11 +17,11 @@ const clearBtn      = document.getElementById("clear-btn");
 
 // ── Ranked list ───────────────────────────────────────────────────────────────
 
-/** Render the top-20 ranked list of safest countries. */
+/** Render all countries ranked lowest-to-highest AI presence. */
 function renderRankedList(view) {
-  const top20 = getRankedCountries().slice(0, 20);
+  const allCountries = getRankedCountries();
 
-  rankedList.innerHTML = top20
+  rankedList.innerHTML = allCountries
     .map(
       ({ iso, name, composite }, i) => `
         <calcite-list-item

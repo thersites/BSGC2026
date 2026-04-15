@@ -33,7 +33,7 @@
 ### Sidebar
 
 - [ ] **SIDE-01**: Calcite Shell layout with a collapsible left panel
-- [ ] **SIDE-02**: Ranked list of top 20 lowest-AI countries visible in the sidebar
+- [ ] **SIDE-02**: All countries ranked lowest-to-highest AI presence visible in the sidebar
 - [ ] **SIDE-03**: Clicking a country in the ranked list flies the map to that country and selects it
 - [ ] **SIDE-04**: Selected country detail view shows: name, composite score, per-dimension scores, source notes
 - [ ] **SIDE-05**: Comparison panel shows up to 3 selected countries side-by-side with their scores
