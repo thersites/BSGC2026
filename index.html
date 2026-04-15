@@ -19,22 +19,9 @@
         <calcite-panel heading="Safest Places from AI">
 
           <calcite-block
-            id="ranked-block"
-            heading="All Countries by AI Exposure"
-            expanded
-          >
-            <calcite-list
-              id="ranked-list"
-              selection-mode="none"
-              label="Ranked countries by AI presence"
-            ></calcite-list>
-          </calcite-block>
-
-          <calcite-block
             id="detail-block"
             heading="Country Detail"
             expanded
-            hidden
           >
             <div id="detail-content"></div>
           </calcite-block>
@@ -53,6 +40,18 @@
               title="Clear comparison"
             ></calcite-action>
             <div id="compare-content"></div>
+          </calcite-block>
+
+          <calcite-block
+            id="ranked-block"
+            heading="All Countries by AI Exposure"
+            expanded
+          >
+            <calcite-list
+              id="ranked-list"
+              selection-mode="none"
+              label="Ranked countries by AI presence"
+            ></calcite-list>
           </calcite-block>
 
         </calcite-panel>

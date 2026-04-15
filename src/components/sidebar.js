@@ -69,8 +69,11 @@ function scoreBar(label, value) {
 // ── Detail view ───────────────────────────────────────────────────────────────
 
 function renderDetail(isos) {
+  detailBlock.hidden = false;
+
   if (isos.length === 0) {
-    detailBlock.hidden = true;
+    detailBlock.heading = "Country Detail";
+    detailContent.innerHTML = `<p class="no-data-msg">Click a country on the map or in the list below to see its details.</p>`;
     return;
   }
 
@@ -173,6 +176,7 @@ function updateListHighlights(isos) {
  */
 export function initSidebar(view) {
   renderRankedList(view);
+  renderDetail([]);
 
   store.on("selectionChanged", (isos) => {
     renderDetail(isos);
