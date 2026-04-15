@@ -55,40 +55,42 @@
             <div id="compare-content"></div>
           </calcite-block>
 
-          <calcite-block heading="Legend" expanded>
-            <div id="legend-content" class="legend">
-              <div class="legend-item">
-                <span class="legend-swatch" style="background:#1a9641"></span>
-                <span>0–20 &mdash; Virtually no AI</span>
-              </div>
-              <div class="legend-item">
-                <span class="legend-swatch" style="background:#78c679"></span>
-                <span>21–40 &mdash; Low AI presence</span>
-              </div>
-              <div class="legend-item">
-                <span class="legend-swatch" style="background:#c9e88a"></span>
-                <span>41–60 &mdash; Moderate AI presence</span>
-              </div>
-              <div class="legend-item">
-                <span class="legend-swatch" style="background:#fdae61"></span>
-                <span>61–80 &mdash; High AI presence</span>
-              </div>
-              <div class="legend-item">
-                <span class="legend-swatch" style="background:#d7191c"></span>
-                <span>81–100 &mdash; AI-saturated</span>
-              </div>
-              <div class="legend-item">
-                <span class="legend-swatch no-data"></span>
-                <span>No data</span>
-              </div>
-            </div>
-          </calcite-block>
-
         </calcite-panel>
       </calcite-shell-panel>
 
       <div id="map-container"></div>
     </calcite-shell>
+
+    <!-- Legend overlay — added to view.ui "bottom-right" by initMap.js -->
+    <div id="map-legend" class="map-legend-widget">
+      <div class="map-legend-title">AI Presence</div>
+      <div class="legend">
+        <div class="legend-item">
+          <span class="legend-swatch swatch-none"></span>
+          <span>0–20 &mdash; Virtually no AI</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-swatch swatch-low"></span>
+          <span>21–40 &mdash; Low</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-swatch swatch-moderate"></span>
+          <span>41–60 &mdash; Moderate</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-swatch swatch-high"></span>
+          <span>61–80 &mdash; High</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-swatch swatch-saturated"></span>
+          <span>81–100 &mdash; AI-saturated</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-swatch swatch-nodata"></span>
+          <span>No data</span>
+        </div>
+      </div>
+    </div>
 
     <div id="tooltip" class="map-tooltip" role="tooltip" aria-hidden="true"></div>
 

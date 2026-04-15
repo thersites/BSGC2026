@@ -80,6 +80,10 @@ export async function initMap(containerId) {
 
   await view.when();
 
+  // ── Legend overlay ─────────────────────────────────────────────────────────
+  const legendEl = document.getElementById("map-legend");
+  if (legendEl) view.ui.add(legendEl, "bottom-right");
+
   // ── Hover: highlight + tooltip ─────────────────────────────────────────────
   view.on("pointer-move", async (event) => {
     const { results } = await view.hitTest(event, { include: [countriesLayer] });

@@ -83,8 +83,35 @@ calcite-shell {
   border: 1px solid rgba(0,0,0,0.15);
 }
 
-.legend-swatch.no-data {
-  background: #c8c8c8;
+.legend-swatch.swatch-none     { background: #1a9641; }
+.legend-swatch.swatch-low      { background: #78c679; }
+.legend-swatch.swatch-moderate { background: #c9e88a; }
+.legend-swatch.swatch-high     { background: #fdae61; }
+.legend-swatch.swatch-saturated{ background: #d7191c; }
+.legend-swatch.swatch-nodata   { background: #c8c8c8; }
+
+/* ── Map legend widget (bottom-right overlay) ────────────────────────────── */
+.map-legend-widget {
+  background: rgba(255, 255, 255, 0.92);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  border-radius: 6px;
+  padding: 10px 14px 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  min-width: 180px;
+}
+
+.map-legend-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.map-legend-widget .legend-item {
+  color: #333;
 }
 
 /* ── Score bars (detail panel) ───────────────────────────────────────────── */
