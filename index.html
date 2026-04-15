@@ -13,6 +13,15 @@
           heading="AI-Free Zones"
           description="Discover where AI hasn't taken over"
         ></calcite-navigation-logo>
+        <calcite-action
+          slot="content-end"
+          id="info-btn"
+          icon="information"
+          text="About AI Scores"
+          title="How AI presence is calculated"
+          appearance="transparent"
+          scale="m"
+        ></calcite-action>
       </calcite-navigation>
 
       <calcite-shell-panel slot="panel-start" position="start" width-scale="m">
@@ -93,6 +102,46 @@
 
     <div id="tooltip" class="map-tooltip" role="tooltip" aria-hidden="true"></div>
 
+    <calcite-dialog
+      id="info-dialog"
+      heading="How AI Presence Is Calculated"
+      kind="info"
+      scale="m"
+      width-scale="m"
+    >
+      <div id="info-dialog-content">
+        <p>Each country receives a <strong>composite AI presence score</strong> from 0 to 100, where 0 means virtually no AI presence and 100 means fully AI-saturated. The composite is the simple average of three equally-weighted dimensions:</p>
+
+        <h3>Daily Life AI (33%)</h3>
+        <p>Measures how much AI consumers encounter in everyday life — smart assistants, recommendation engines, facial recognition in public spaces, and AI-driven services in retail, healthcare, and transport.</p>
+
+        <h3>Industry AI (33%)</h3>
+        <p>Measures AI adoption across sectors such as manufacturing, finance, agriculture, and logistics. Reflects both the number of AI deployments and their economic footprint.</p>
+
+        <h3>Surveillance AI (33%)</h3>
+        <p>Measures the extent of government and commercial AI-powered surveillance: CCTV networks, biometric databases, social-scoring systems, and predictive policing tools.</p>
+
+        <h3>Data Sources</h3>
+        <ul>
+          <li><strong>Oxford Insights Government AI Readiness Index</strong> — annual readiness assessment for 193 countries</li>
+          <li><strong>Stanford HAI AI Index</strong> — tracks AI investment, research output, and adoption by country</li>
+          <li><strong>OECD AI Policy Observatory</strong> — policy and deployment data for OECD and partner nations</li>
+        </ul>
+
+        <p class="info-footnote">Scores are curated estimates based on publicly available indices. Countries without sufficient data are shown in grey and excluded from rankings.</p>
+      </div>
+    </calcite-dialog>
+
     <script type="module" src="/src/main.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const btn    = document.getElementById("info-btn");
+        const dialog = document.getElementById("info-dialog");
+        if (btn && dialog) {
+          btn.addEventListener("click", () => { dialog.open = true; });
+          dialog.addEventListener("calciteDialogClose", () => { dialog.open = false; });
+        }
+      });
+    </script>
   </body>
 </html>

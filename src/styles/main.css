@@ -248,6 +248,13 @@ calcite-shell {
   font-weight: 700;
 }
 
+/* ── Info dialog footnote ────────────────────────────────────────────────── */
+.info-footnote {
+  font-size: 0.8rem;
+  color: var(--calcite-color-text-3, #888);
+  margin-top: 1rem;
+}
+
 /* ── No data message ─────────────────────────────────────────────────────── */
 .no-data-msg {
   font-size: 0.8125rem;
