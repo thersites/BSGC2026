@@ -15,21 +15,28 @@ body {
 }
 
 /* ── Full-screen shell ───────────────────────────────────────────────────── */
+/* Don't override calcite-shell's display — it manages its own shadow layout.
+   Just ensure it fills the viewport height so its content slot has room. */
 calcite-shell {
-  display: flex;
-  flex-direction: column;
   height: 100vh;
   width: 100vw;
 }
 
-/* ── Map container fills remaining space ─────────────────────────────────── */
+/* ── Map container fills the shell's content slot ───────────────────────── */
+/* calcite-shell places default-slot children into a content area that fills
+   the remaining height. The child needs height:100% to take up that space. */
 #map-container {
-  flex: 1;
-  min-height: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
-.esri-view {
-  height: 100%;
+/* Make sure the ArcGIS view surface fills its container */
+.esri-view,
+.esri-view .esri-view-surface,
+.esri-view > .esri-view-root {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* ── Tooltip ─────────────────────────────────────────────────────────────── */

@@ -24,9 +24,16 @@ esriConfig.assetsPath = import.meta.env.PROD
 import { initMap } from "./map/initMap.js";
 import { initSidebar } from "./components/sidebar.js";
 
-// Calcite web components need one micro-tick after defineCustomElements before
-// DOM queries are safe; DOMContentLoaded gives us that.
+// Bootstrap once the DOM is ready.
 document.addEventListener("DOMContentLoaded", async () => {
+  // Wait for calcite-shell to upgrade so it establishes its shadow-DOM layout
+  // before MapView measures the container height.
+  await customElements.whenDefined("calcite-shell");
+
+  // One rAF lets the browser apply the shell's layout paint before we hand
+  // the container to ArcGIS.
+  await new Promise((resolve) => requestAnimationFrame(resolve));
+
   const view = await initMap("map-container");
   initSidebar(view);
 });

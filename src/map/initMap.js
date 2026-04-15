@@ -59,6 +59,9 @@ export async function initMap(containerId) {
 
   await view.when();
 
+  // Force a resize in case the container was measured at 0×0 during construction.
+  view.resize();
+
   // ── Hover: highlight + tooltip ─────────────────────────────────────────────
   view.on("pointer-move", async (event) => {
     const { results } = await view.hitTest(event, { include: [countriesLayer] });

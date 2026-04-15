@@ -3,11 +3,14 @@ import { AI_DATA, getDefaultEntry } from "../data/aiPresence.js";
 import { aiRenderer } from "./renderer.js";
 
 /**
- * Public GeoJSON source — Natural Earth 110m countries.
+ * Public GeoJSON sources — Natural Earth 110m countries.
  * ISO_A3 field matches our AI dataset keys.
+ * Multiple URLs tried in order in case one is blocked.
  */
-const GEOJSON_URL =
-  "https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson";
+const GEOJSON_URLS = [
+  "https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson",
+  "https://cdn.jsdelivr.net/gh/datasets/geo-countries@master/data/countries.geojson",
+];
 
 /**
  * Fetches the world countries GeoJSON, merges AI presence scores into each
@@ -16,8 +19,16 @@ const GEOJSON_URL =
  * @returns {Promise<string>} Object URL
  */
 async function buildEnrichedGeoJSONUrl() {
-  const resp = await fetch(GEOJSON_URL);
-  if (!resp.ok) throw new Error(`Failed to fetch world GeoJSON: ${resp.status}`);
+  let resp;
+  for (const url of GEOJSON_URLS) {
+    try {
+      resp = await fetch(url);
+      if (resp.ok) break;
+    } catch {
+      // try next URL
+    }
+  }
+  if (!resp?.ok) throw new Error("Failed to fetch world GeoJSON from all sources");
   const geoJSON = await resp.json();
 
   const enriched = {
