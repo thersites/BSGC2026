@@ -6,6 +6,7 @@ import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol.js";
 import { createCountriesLayer } from "./layers.js";
 import { highlightSymbol } from "./renderer.js";
 import { store } from "../state/store.js";
+import { getScoreColor } from "../data/aiPresence.js";
 
 /** Tooltip DOM element. */
 const tooltip = document.getElementById("tooltip");
@@ -13,13 +14,23 @@ const tooltip = document.getElementById("tooltip");
 /** Layer for transient hover highlight (blue). */
 const highlightLayer = new GraphicsLayer({ id: "highlight", listMode: "hide" });
 
-/** Layer for persistent selection highlight (red). Sits above the hover layer. */
+/** Layer for persistent selection highlight. Sits above the hover layer. */
 const selectionLayer = new GraphicsLayer({ id: "selection", listMode: "hide" });
 
-const selectionSymbol = new SimpleFillSymbol({
-  color: [220, 30, 30, 0.22],
-  outline: { color: [220, 30, 30, 1], width: 2.5 },
-});
+/**
+ * Build a fill symbol whose color matches the legend class for the given score.
+ * @param {number|null} score
+ */
+function buildSelectionSymbol(score) {
+  const hex = getScoreColor(score);
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return new SimpleFillSymbol({
+    color: [r, g, b, 0.35],
+    outline: { color: [r, g, b, 1], width: 2.5 },
+  });
+}
 
 /** Currently active hover graphic. */
 let hoverGraphic = null;
@@ -136,18 +147,19 @@ export async function flyToCountry(view, iso) {
   const result = await layer.queryFeatures({
     where: `iso = '${iso}'`,
     returnGeometry: true,
-    outFields: [],
+    outFields: ["composite", "noData"],
   });
 
   if (result.features.length === 0) return;
 
   const feature = result.features[0];
+  const score = feature.attributes?.noData ? null : feature.attributes?.composite;
 
-  // Replace the selection highlight with a red outline for this country.
+  // Replace the selection highlight using the legend colour for this score.
   const sel = view.map.findLayerById("selection");
   if (sel) {
     sel.removeAll();
-    sel.add(new Graphic({ geometry: feature.geometry, symbol: selectionSymbol }));
+    sel.add(new Graphic({ geometry: feature.geometry, symbol: buildSelectionSymbol(score) }));
   }
 
   await view.goTo(
