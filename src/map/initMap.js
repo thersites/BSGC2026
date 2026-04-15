@@ -2,6 +2,7 @@ import Map from "@arcgis/core/Map.js";
 import MapView from "@arcgis/core/views/MapView.js";
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer.js";
 import Graphic from "@arcgis/core/Graphic.js";
+import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol.js";
 import { createCountriesLayer } from "./layers.js";
 import { highlightSymbol } from "./renderer.js";
 import { store } from "../state/store.js";
@@ -9,10 +10,18 @@ import { store } from "../state/store.js";
 /** Tooltip DOM element. */
 const tooltip = document.getElementById("tooltip");
 
-/** Layer used to draw the highlight graphic over the selected country. */
+/** Layer for transient hover highlight (blue). */
 const highlightLayer = new GraphicsLayer({ id: "highlight", listMode: "hide" });
 
-/** Currently active highlight graphic (hover). */
+/** Layer for persistent selection highlight (red). Sits above the hover layer. */
+const selectionLayer = new GraphicsLayer({ id: "selection", listMode: "hide" });
+
+const selectionSymbol = new SimpleFillSymbol({
+  color: [220, 30, 30, 0.22],
+  outline: { color: [220, 30, 30, 1], width: 2.5 },
+});
+
+/** Currently active hover graphic. */
 let hoverGraphic = null;
 
 /**
@@ -45,7 +54,7 @@ export async function initMap(containerId) {
   const map = new Map({
     // "osm" basemap uses OpenStreetMap tiles and needs no API key.
     basemap: "osm",
-    layers: [countriesLayer, highlightLayer],
+    layers: [countriesLayer, highlightLayer, selectionLayer],
   });
 
   const view = new MapView({
@@ -133,8 +142,24 @@ export async function flyToCountry(view, iso) {
   if (result.features.length === 0) return;
 
   const feature = result.features[0];
+
+  // Replace the selection highlight with a red outline for this country.
+  const sel = view.map.findLayerById("selection");
+  if (sel) {
+    sel.removeAll();
+    sel.add(new Graphic({ geometry: feature.geometry, symbol: selectionSymbol }));
+  }
+
   await view.goTo(
     { target: feature.geometry.extent.expand(2) },
     { duration: 800, easing: "ease-in-out" }
   );
+}
+
+/**
+ * Remove the red selection highlight from the map.
+ * @param {import("@arcgis/core/views/MapView").default} view
+ */
+export function clearSelectionHighlight(view) {
+  view.map.findLayerById("selection")?.removeAll();
 }

@@ -5,7 +5,7 @@ import {
   getScoreColor,
 } from "../data/aiPresence.js";
 import { store } from "../state/store.js";
-import { flyToCountry } from "../map/initMap.js";
+import { flyToCountry, clearSelectionHighlight } from "../map/initMap.js";
 
 // ── DOM refs ──────────────────────────────────────────────────────────────────
 const rankedList    = document.getElementById("ranked-list");
@@ -182,5 +182,6 @@ export function initSidebar(view) {
 
   clearBtn?.addEventListener("click", () => {
     store.clearSelection();
+    clearSelectionHighlight(view);
   });
 }
