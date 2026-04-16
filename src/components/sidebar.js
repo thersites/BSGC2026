@@ -73,7 +73,7 @@ function renderDetail(isos) {
 
   if (isos.length === 0) {
     detailBlock.heading = "Country Detail";
-    detailContent.innerHTML = `<p class="no-data-msg">Click a country on the map or in the list below to see its details.</p>`;
+    detailContent.innerHTML = `<p class="no-data-msg">Click a country in the list below to see its details.</p>`;
     return;
   }
 
